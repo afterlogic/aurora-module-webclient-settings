@@ -25,7 +25,7 @@ module.exports = function (oAppData) {
 				CHeaderItemView = require('modules/CoreClient/js/views/CHeaderItemView.js')
 			;
 			return {
-				item: new CHeaderItemView(TextUtils.i18n('CORE/HEADING_SETTINGS_TABNAME')),
+				item: new CHeaderItemView(TextUtils.i18n('CORECLIENT/HEADING_SETTINGS_TABNAME')),
 				name: Settings.HashModuleName
 			};
 		},
