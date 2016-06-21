@@ -24,6 +24,8 @@ function CAbstractSettingsFormView(sServerModule)
 	this.sServerModule = sServerModule ? sServerModule : 'Core';
 	
 	this.isSaving = ko.observable(false);
+	
+	this.visible = ko.observable(true);
 }
 
 CAbstractSettingsFormView.prototype.ViewTemplate = ''; // should be overriden
