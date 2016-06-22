@@ -167,4 +167,14 @@ CAbstractSettingsFormView.prototype.onResponse = function (oResponse, oRequest)
 	}
 };
 
+/**
+ * Should be overriden.
+ * 
+ * @param {string} sEntitiesName
+ * @param {int} iEntityId
+ */
+CAbstractSettingsFormView.prototype.setAccessLevel = function (sEntitiesName, iEntityId)
+{
+};
+
 module.exports = CAbstractSettingsFormView;
