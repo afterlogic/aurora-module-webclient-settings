@@ -26,12 +26,15 @@ function CAbstractSettingsFormView(sServerModule)
 	this.isSaving = ko.observable(false);
 	
 	this.visible = ko.observable(true);
+	
+	this.bShown = false;
 }
 
 CAbstractSettingsFormView.prototype.ViewTemplate = ''; // should be overriden
 
 CAbstractSettingsFormView.prototype.onRoute = function ()
 {
+	this.bShown = true;
 	this.revert();
 };
 
@@ -46,6 +49,7 @@ CAbstractSettingsFormView.prototype.hide = function (fAfterHideHandler, fRevertR
 		Popups.showPopup(ConfirmPopup, [TextUtils.i18n('CORECLIENT/CONFIRM_DISCARD_CHANGES'), _.bind(function (bDiscard) {
 			if (bDiscard)
 			{
+				this.bShown = false;
 				fAfterHideHandler();
 				this.revert();
 			}
@@ -57,6 +61,7 @@ CAbstractSettingsFormView.prototype.hide = function (fAfterHideHandler, fRevertR
 	}
 	else
 	{
+		this.bShown = false;
 		fAfterHideHandler();
 	}
 };
@@ -170,10 +175,10 @@ CAbstractSettingsFormView.prototype.onResponse = function (oResponse, oRequest)
 /**
  * Should be overriden.
  * 
- * @param {string} sEntitiesName
+ * @param {string} sEntityType
  * @param {int} iEntityId
  */
-CAbstractSettingsFormView.prototype.setAccessLevel = function (sEntitiesName, iEntityId)
+CAbstractSettingsFormView.prototype.setAccessLevel = function (sEntityType, iEntityId)
 {
 };
 
