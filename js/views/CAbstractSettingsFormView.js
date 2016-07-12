@@ -127,11 +127,14 @@ CAbstractSettingsFormView.prototype.getParametersForSave = function ()
  */
 CAbstractSettingsFormView.prototype.save = function ()
 {
-	this.isSaving(true);
-	
-	this.updateSavedState();
-	
-	Ajax.send(this.sServerModule, 'UpdateSettings', this.getParametersForSave(), this.onResponse, this);
+	if (!_.isFunction(this.validateBeforeSave) || this.validateBeforeSave())
+	{
+		this.isSaving(true);
+
+		this.updateSavedState();
+
+		Ajax.send(this.sServerModule, 'UpdateSettings', this.getParametersForSave(), this.onResponse, this);
+	}
 };
 
 /**
