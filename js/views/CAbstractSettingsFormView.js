@@ -161,7 +161,7 @@ CAbstractSettingsFormView.prototype.onResponse = function (oResponse, oRequest)
 {
 	this.isSaving(false);
 
-	if (oResponse.Result === false)
+	if (!oResponse.Result)
 	{
 		Api.showErrorByCode(oResponse, TextUtils.i18n('CORECLIENT/ERROR_SAVING_SETTINGS_FAILED'));
 	}
