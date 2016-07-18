@@ -27,6 +27,8 @@ function CAbstractSettingsFormView(sServerModule)
 	
 	this.visible = ko.observable(true);
 	
+	this.sSavedState = '';
+	
 	this.bShown = false;
 }
 
