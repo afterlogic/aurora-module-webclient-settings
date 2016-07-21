@@ -20,6 +20,9 @@
 		&.data {
 			width: 800px;
 			background: #f9f9f9;
+			&.modules {
+				overflow: hidden;
+			}
 		}
 		
 		&.navigation_panel {
@@ -90,10 +93,12 @@
 		}
 	}
 	
-	.panel_content {
-		.resize-compensation-top(0px);
+	.navigation_panel {
+		.panel_content {
+			.resize-compensation-top(0px);
 
-		margin-right: 0px;
+			margin-right: 0px;
+		}
 	}
 	
 	.middle_bar {
@@ -246,7 +251,7 @@
 	}
 }
 
-.panels.settings {
+.panels.settings .panel.data {
 	.buttons {
 		margin: 0px 20px 15px;
 	}
