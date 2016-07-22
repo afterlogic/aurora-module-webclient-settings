@@ -133,8 +133,6 @@ CAbstractSettingsFormView.prototype.save = function ()
 	{
 		this.isSaving(true);
 
-		this.updateSavedState();
-
 		Ajax.send(this.sServerModule, 'UpdateSettings', this.getParametersForSave(), this.onResponse, this);
 	}
 };
@@ -171,6 +169,8 @@ CAbstractSettingsFormView.prototype.onResponse = function (oResponse, oRequest)
 	{
 		var oParameters = oRequest.Parameters;
 		
+		this.updateSavedState();
+
 		this.applySavedValues(oParameters);
 		
 		Screens.showReport(TextUtils.i18n('CORECLIENT/REPORT_SETTINGS_UPDATE_SUCCESS'));
