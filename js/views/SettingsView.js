@@ -5,6 +5,7 @@ var
 	$ = require('jquery'),
 	ko = require('knockout'),
 	
+	App = require('modules/CoreClient/js/App.js'),
 	Routing = require('modules/CoreClient/js/Routing.js'),
 	CAbstractScreenView = require('modules/CoreClient/js/views/CAbstractScreenView.js'),
 	
@@ -23,11 +24,14 @@ function CSettingsView()
 	this.tabs = ko.observableArray([]);
 	
 	this.currentTab  = ko.observable(null);
+	
+	App.broadcastEvent('%ModuleName%::ConstructView::after', {'Name': this.ViewConstructorName, 'View': this});
 }
 
 _.extendOwn(CSettingsView.prototype, CAbstractScreenView.prototype);
 
 CSettingsView.prototype.ViewTemplate = '%ModuleName%_SettingsView';
+CSettingsView.prototype.ViewConstructorName = 'CSettingsView';
 
 CSettingsView.prototype.registerTab = function (fGetTabView, oTabName, oTabTitle) {
 	var iLastIndex = Settings.TabsOrder.length;
