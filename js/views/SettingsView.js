@@ -25,6 +25,15 @@ function CSettingsView()
 	
 	this.currentTab  = ko.observable(null);
 	
+	App.subscribeEvent('OpenAuthAccountSettingTab', _.bind(function () {
+		var oAuthAccountTab = _.find(this.tabs(), function (oTab) {
+			return _.indexOf(oTab.capabilities, Enums.SettingsTabCapability.ManageAuthAccounts) !== -1;
+		});
+		if (oAuthAccountTab)
+		{
+			this.changeTab(oAuthAccountTab.name);
+		}
+	}, this));
 	App.broadcastEvent('%ModuleName%::ConstructView::after', {'Name': this.ViewConstructorName, 'View': this});
 }
 
@@ -33,14 +42,23 @@ _.extendOwn(CSettingsView.prototype, CAbstractScreenView.prototype);
 CSettingsView.prototype.ViewTemplate = '%ModuleName%_SettingsView';
 CSettingsView.prototype.ViewConstructorName = 'CSettingsView';
 
-CSettingsView.prototype.registerTab = function (fGetTabView, oTabName, oTabTitle) {
+/**
+ * Registers settings tab.
+ * 
+ * @param {function} fGetTabView Function that returns settings tab view object.
+ * @param {string} sTabName Tab name is used in hash string to rout to this tab.
+ * @param {string} sTabTitle Tab title is used in the list of tabs in navigation menu.
+ * @param {array} aCapabilities List of capabilities. Avaliable capabilities are listed in Enums.SettingsTabCapability.
+ */
+CSettingsView.prototype.registerTab = function (fGetTabView, sTabName, sTabTitle, aCapabilities) {
 	var iLastIndex = Settings.TabsOrder.length;
 	
 	this.tabs.push({
 		view: null,
 		getView: fGetTabView,
-		name: oTabName,
-		title: oTabTitle
+		name: sTabName,
+		title: sTabTitle,
+		capabilities: _.isArray(aCapabilities) ? aCapabilities : []
 	});
 	
 	this.tabs(_.sortBy(this.tabs(), function (oTab) {
