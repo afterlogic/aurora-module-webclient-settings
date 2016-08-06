@@ -102,7 +102,7 @@ CSettingsView.prototype.onRoute = function (aParams)
 		bShow = true
 	;
 	
-	if (oNewTab.view.visible && !oNewTab.view.visible())
+	if (oNewTab && oNewTab.view.visible && !oNewTab.view.visible())
 	{
 		oNewTab = _.find(this.tabs(), function (oTab) {
 			return !oTab.view.visible || oTab.view.visible();
