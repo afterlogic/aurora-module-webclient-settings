@@ -5,7 +5,7 @@
 				<div class="middle_bar">
 					<div class="panel_center">
 						<div class="items_list" data-bind="foreach: tabs">
-							<div class="item canSelect" data-bind="visible: typeof(visible) !== 'undefined' ? visible() : true, 
+							<div class="item canSelect" data-bind="visible: typeof(view.visible) !== 'undefined' ? view.visible() : true, 
 									attr: {'class': 'item canSelect ' + name, 'id': 'selenium_settings_' + name}, 
 									css: {'selected': $parent.currentTab() && $parent.currentTab().name === name}, 
 									click: function () { $parent.changeTab(name); }">

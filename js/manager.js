@@ -9,8 +9,6 @@ module.exports = function (oAppData, iUserRole, bPublic) {
 	
 	if (bAdminUser || bPowerUser || bRegisteredUser)
 	{
-		require('modules/%ModuleName%/js/enums.js');
-		
 		var
 			Settings = require('modules/%ModuleName%/js/Settings.js'),
 			oSettings = oAppData['%ModuleName%'] || {}
@@ -52,11 +50,10 @@ module.exports = function (oAppData, iUserRole, bPublic) {
 				 * @param {function} fGetTabView Function that returns settings tab view object.
 				 * @param {string} sTabName Tab name is used in hash string to rout to this tab.
 				 * @param {string} sTabTitle Tab title is used in the list of tabs in navigation menu.
-				 * @param {array} aCapabilities List of capabilities. Avaliable capabilities are listed in Enums.SettingsTabCapability.
 				 */
-				registerSettingsTab: function (fGetTabView, sTabName, sTabTitle, aCapabilities) {
+				registerSettingsTab: function (fGetTabView, sTabName, sTabTitle) {
 					var SettingsView = require('modules/%ModuleName%/js/views/SettingsView.js');
-					SettingsView.registerTab(fGetTabView, sTabName, sTabTitle, aCapabilities);
+					SettingsView.registerTab(fGetTabView, sTabName, sTabTitle);
 				},
 				getAbstractSettingsFormViewClass: function () {
 					return require('modules/%ModuleName%/js/views/CAbstractSettingsFormView.js');

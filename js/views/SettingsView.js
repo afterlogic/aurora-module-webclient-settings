@@ -25,14 +25,8 @@ function CSettingsView()
 	
 	this.currentTab  = ko.observable(null);
 	
-	App.subscribeEvent('OpenAuthAccountSettingTab', _.bind(function () {
-		var oAuthAccountTab = _.find(this.tabs(), function (oTab) {
-			return _.indexOf(oTab.capabilities, Enums.SettingsTabCapability.ManageAuthAccounts) !== -1;
-		});
-		if (oAuthAccountTab)
-		{
-			this.changeTab(oAuthAccountTab.name);
-		}
+	App.subscribeEvent('OpenSettingTab', _.bind(function (oParams) {
+		this.changeTab(oParams.Name);
 	}, this));
 	App.broadcastEvent('%ModuleName%::ConstructView::after', {'Name': this.ViewConstructorName, 'View': this});
 }
@@ -48,17 +42,18 @@ CSettingsView.prototype.ViewConstructorName = 'CSettingsView';
  * @param {function} fGetTabView Function that returns settings tab view object.
  * @param {string} sTabName Tab name is used in hash string to rout to this tab.
  * @param {string} sTabTitle Tab title is used in the list of tabs in navigation menu.
- * @param {array} aCapabilities List of capabilities. Avaliable capabilities are listed in Enums.SettingsTabCapability.
  */
-CSettingsView.prototype.registerTab = function (fGetTabView, sTabName, sTabTitle, aCapabilities) {
-	var iLastIndex = Settings.TabsOrder.length;
+CSettingsView.prototype.registerTab = function (fGetTabView, sTabName, sTabTitle) {
+	var
+		iLastIndex = Settings.TabsOrder.length,
+		oView = fGetTabView()
+	;
 	
+	oView.SettingsTabName = sTabName;
 	this.tabs.push({
-		view: null,
-		getView: fGetTabView,
+		view: oView,
 		name: sTabName,
-		title: sTabTitle,
-		capabilities: _.isArray(aCapabilities) ? aCapabilities : []
+		title: sTabTitle
 	});
 	
 	this.tabs(_.sortBy(this.tabs(), function (oTab) {
@@ -91,11 +86,6 @@ CSettingsView.prototype.onRoute = function (aParams)
 		fShowNewTab = function () {
 			if (oNewTab)
 			{
-				if (!oNewTab.view && $.isFunction(oNewTab.getView))
-				{
-					oNewTab.view = oNewTab.getView();
-					oNewTab.getView = undefined;
-				}
 				if ($.isFunction(oNewTab.view.onRoute))
 				{
 					oNewTab.view.onRoute(aParams);
@@ -112,6 +102,13 @@ CSettingsView.prototype.onRoute = function (aParams)
 		bShow = true
 	;
 	
+	if (oNewTab.view.visible && !oNewTab.view.visible())
+	{
+		oNewTab = _.find(this.tabs(), function (oTab) {
+			return !oTab.view.visible || oTab.view.visible();
+		});
+	}
+	
 	if (oNewTab)
 	{
 		if (oCurrentTab && $.isFunction(oCurrentTab.view.hide))
@@ -123,15 +120,8 @@ CSettingsView.prototype.onRoute = function (aParams)
 	else if (!oCurrentTab)
 	{
 		oNewTab = _.find(this.tabs(), function (oTab) {
-			return oTab.name === 'common';
+			return !oTab.view.visible || oTab.view.visible();
 		});
-		
-		if (!oNewTab)
-		{
-			oNewTab = _.find(this.tabs(), function (oTab) {
-				return !oTab.visible || oTab.visible();
-			});
-		}
 	}
 	
 	if (bShow)
