@@ -91,6 +91,10 @@ CSettingsView.prototype.onRoute = function (aParams)
 					oNewTab.view.onRoute(aParams);
 				}
 				this.currentTab(oNewTab);
+				if (oNewTab.name !== sNewTabName)
+				{
+					Routing.replaceHashDirectly([Settings.HashModuleName, oNewTab.name]);
+				}
 			}
 		}.bind(this),
 		fRevertRouting = _.bind(function () {
