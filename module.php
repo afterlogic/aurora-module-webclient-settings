@@ -1,6 +1,6 @@
 <?php
 
-class SettingsClientModule extends AApiModule
+class SettingsWebclientModule extends AApiModule
 {
 	public function GetAppData()
 	{
