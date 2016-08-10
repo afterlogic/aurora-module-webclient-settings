@@ -40,7 +40,7 @@ module.exports = function (oAppData, iUserRole, bPublic) {
 						CHeaderItemView = require('%PathToCoreWebclientModule%/js/views/CHeaderItemView.js')
 					;
 					return {
-						item: new CHeaderItemView(TextUtils.i18n('CORECLIENT/HEADING_SETTINGS_TABNAME')),
+						item: new CHeaderItemView(TextUtils.i18n('COREWEBCLIENT/HEADING_SETTINGS_TABNAME')),
 						name: Settings.HashModuleName
 					};
 				},
