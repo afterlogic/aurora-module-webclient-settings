@@ -19,7 +19,7 @@ var
  */
 function CSettingsView()
 {
-	CAbstractScreenView.call(this);
+	CAbstractScreenView.call(this, '%ModuleName%');
 	
 	this.tabs = ko.observableArray([]);
 	
