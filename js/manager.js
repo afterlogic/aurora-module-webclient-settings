@@ -3,8 +3,8 @@
 module.exports = function (oAppData, iUserRole, bPublic) {
 	var
 		bAdminUser = iUserRole === Enums.UserRole.SuperAdmin,
-		bPowerUser = iUserRole === Enums.UserRole.PowerUser,
-		bRegisteredUser = iUserRole === Enums.UserRole.RegisteredUser
+		bPowerUser = iUserRole === Enums.UserRole.NormalUser,
+		bRegisteredUser = iUserRole === Enums.UserRole.Customer
 	;
 	
 	if (bAdminUser || bPowerUser || bRegisteredUser)
