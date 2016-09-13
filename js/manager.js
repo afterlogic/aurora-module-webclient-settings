@@ -1,10 +1,12 @@
 'use strict';
 
-module.exports = function (oAppData, iUserRole, bPublic) {
+module.exports = function (oAppData) {
 	var
-		bAdminUser = iUserRole === Enums.UserRole.SuperAdmin,
-		bPowerUser = iUserRole === Enums.UserRole.NormalUser,
-		bRegisteredUser = iUserRole === Enums.UserRole.Customer
+		App = require('%PathToCoreWebclientModule%/js/App.js'),
+		
+		bAdminUser = App.getUserRole() === Enums.UserRole.SuperAdmin,
+		bPowerUser = App.getUserRole() === Enums.UserRole.NormalUser,
+		bRegisteredUser = App.getUserRole() === Enums.UserRole.Customer
 	;
 	
 	if (bAdminUser || bPowerUser || bRegisteredUser)
