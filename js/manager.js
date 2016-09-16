@@ -5,11 +5,11 @@ module.exports = function (oAppData) {
 		App = require('%PathToCoreWebclientModule%/js/App.js'),
 		
 		bAdminUser = App.getUserRole() === Enums.UserRole.SuperAdmin,
-		bPowerUser = App.getUserRole() === Enums.UserRole.NormalUser,
-		bRegisteredUser = App.getUserRole() === Enums.UserRole.Customer
+		bNormalUser = App.getUserRole() === Enums.UserRole.NormalUser,
+		bCustomerUser = App.getUserRole() === Enums.UserRole.Customer
 	;
 	
-	if (bAdminUser || bPowerUser || bRegisteredUser)
+	if (bAdminUser || bNormalUser || bCustomerUser)
 	{
 		var
 			Settings = require('modules/%ModuleName%/js/Settings.js'),
@@ -26,7 +26,7 @@ module.exports = function (oAppData) {
 				}
 			};
 		}
-		else if (bPowerUser || bRegisteredUser)
+		else if (bNormalUser || bRegisteredUser)
 		{
 			return {
 				getScreens: function () {
