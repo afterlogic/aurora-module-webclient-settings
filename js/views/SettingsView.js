@@ -106,6 +106,12 @@ CSettingsView.prototype.onRoute = function (aParams)
 		bShow = true
 	;
 	
+	if (oCurrentTab && sNewTabName === oCurrentTab.name)
+	{
+		oCurrentTab.view.onRoute(aParams);
+		return;
+	}
+	
 	if (oNewTab && oNewTab.view.visible && !oNewTab.view.visible())
 	{
 		oNewTab = _.find(this.tabs(), function (oTab) {
