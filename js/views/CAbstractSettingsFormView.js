@@ -38,7 +38,13 @@ CAbstractSettingsFormView.prototype.onRoute = function ()
 {
 	this.bShown = true;
 	this.revert();
+	if (_.isFunction(this.onShow))
+	{
+		this.onShow();
+	}
 };
+
+CAbstractSettingsFormView.prototype.show = CAbstractSettingsFormView.prototype.onRoute;
 
 /**
  * @param {Function} fAfterHideHandler
