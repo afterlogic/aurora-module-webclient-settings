@@ -18,7 +18,9 @@
  * @package Modules
  */
 
-class SettingsWebclientModule extends AApiModule
+namespace Aurora\Modules;
+
+class SettingsWebclientModule extends \AApiModule
 {
 	/***** public functions might be called with web API *****/
 	/**
