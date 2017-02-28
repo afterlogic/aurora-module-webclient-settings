@@ -20,7 +20,7 @@
 
 namespace Aurora\Modules;
 
-class SettingsWebclientModule extends \AApiModule
+class SettingsWebclientModule extends \Aurora\System\AbstractModule
 {
 	/***** public functions might be called with web API *****/
 	/**
@@ -30,7 +30,7 @@ class SettingsWebclientModule extends \AApiModule
 	 */
 	public function GetSettings()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
 		return array(
 			'TabsOrder' => array('common', 'mail', 'mail-accounts', 'contacts', 'calendar', 'files', 'mobilesync', 'outlooksync', 'helpdesk', 'openpgp')
