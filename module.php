@@ -20,7 +20,7 @@
 
 namespace Aurora\Modules;
 
-class SettingsWebclientModule extends \Aurora\System\AbstractModule
+class SettingsWebclientModule extends \Aurora\System\Module\AbstractModule
 {
 	/***** public functions might be called with web API *****/
 	/**
