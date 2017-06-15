@@ -6,6 +6,8 @@
 		"afterlogic/aurora-framework": "~0.4"
 	},
 	"extra": {
-		"installer-name": "SettingsWebclient"
+		"installer-name": "SettingsWebclient",
+		"include-in-mobile": false,
+		"include-in-desktop": true
 	}
 }
