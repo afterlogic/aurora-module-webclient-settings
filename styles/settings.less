@@ -3,12 +3,11 @@
 		.items_list_group_style();
 		
 		.items_list .item .title .name {
-			.fadeout-text-init();
-			.fadeout-text(#f0f0f0);
+			.fadeout();
 		}
 
 		.items_list .item.canDrag .title:hover .name {
-			.fadeout-text(#eaeaea);
+			.fadeout();
 		}
 	}
 	
@@ -35,6 +34,10 @@
 			
 			.item {
 				.user-select();
+				
+				.title {
+					.fadeout();			
+				}
 				
 				.icon {
 					display: inline-block;
@@ -99,16 +102,10 @@
 	
 	.navigation_panel {
 		.panel_content {
-			//.resize-compensation-top(0px);
-
 			margin-right: 0px;
 		}
 	}
-	
-	//.middle_bar {
-	//	.resize-compensation-top(72px);
-	//}
-	
+
 	.panel_top {
 		border: 0px;
 		padding: 0px;
