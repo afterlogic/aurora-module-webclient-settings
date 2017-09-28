@@ -10,8 +10,10 @@
 									css: {'selected': $parent.currentTab() && $parent.currentTab().name === name}, 
 									click: function () { $parent.changeTab(name); }">
 								<span class="title">
-									<span class="icon"></span>
-									<span class="text" data-bind="text: title"></span>
+									<span class="name">
+										<span class="icon"></span>
+										<span class="text" data-bind="text: title"></span>
+									</span>
 								</span>
 							</div>
 						</div>
