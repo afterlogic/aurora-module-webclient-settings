@@ -6,7 +6,9 @@ module.exports = function (oAppData) {
 		
 		bAdminUser = App.getUserRole() === Enums.UserRole.SuperAdmin,
 		bNormalUser = App.getUserRole() === Enums.UserRole.NormalUser,
-		bCustomerUser = App.getUserRole() === Enums.UserRole.Customer
+		bCustomerUser = App.getUserRole() === Enums.UserRole.Customer,
+		
+		HeaderItemView = null
 	;
 	
 	if (bAdminUser || bNormalUser || bCustomerUser)
@@ -26,7 +28,7 @@ module.exports = function (oAppData) {
 				}
 			};
 		}
-		else if (bNormalUser || bRegisteredUser)
+		else if (bNormalUser || bCustomerUser)
 		{
 			return {
 				getScreens: function () {
@@ -37,12 +39,16 @@ module.exports = function (oAppData) {
 					return oScreens;
 				},
 				getHeaderItem: function () {
-					var
-						TextUtils = require('%PathToCoreWebclientModule%/js/utils/Text.js'),
-						CHeaderItemView = require('%PathToCoreWebclientModule%/js/views/CHeaderItemView.js')
-					;
+					if (HeaderItemView === null)
+					{
+						var
+							TextUtils = require('%PathToCoreWebclientModule%/js/utils/Text.js'),
+							CHeaderItemView = require('%PathToCoreWebclientModule%/js/views/CHeaderItemView.js')
+						;
+						HeaderItemView = new CHeaderItemView(TextUtils.i18n('COREWEBCLIENT/HEADING_SETTINGS_TABNAME'));
+					}
 					return {
-						item: new CHeaderItemView(TextUtils.i18n('COREWEBCLIENT/HEADING_SETTINGS_TABNAME')),
+						item: HeaderItemView,
 						name: Settings.HashModuleName
 					};
 				},
