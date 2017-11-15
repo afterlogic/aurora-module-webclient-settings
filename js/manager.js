@@ -63,6 +63,10 @@ module.exports = function (oAppData) {
 					var SettingsView = require('modules/%ModuleName%/js/views/SettingsView.js');
 					SettingsView.registerTab(fGetTabView, sTabName, sTabTitle);
 				},
+				registerSettingsTabSection: function (fGetTabView, sTabName, sTabTitle) {
+					var SettingsView = require('modules/%ModuleName%/js/views/SettingsView.js');
+					SettingsView.registerTabSection(fGetTabView, sTabName, sTabTitle);
+				},
 				getAbstractSettingsFormViewClass: function () {
 					return require('modules/%ModuleName%/js/views/CAbstractSettingsFormView.js');
 				},

@@ -46,20 +46,52 @@ CSettingsView.prototype.ViewConstructorName = 'CSettingsView';
 CSettingsView.prototype.registerTab = function (fGetTabView, sTabName, sTabTitle) {
 	var
 		iLastIndex = Settings.TabsOrder.length,
-		oView = fGetTabView()
+		oView = fGetTabView(),
+		oTab = _.findWhere(this.tabs(), {'name': sTabName})
 	;
 	
-	oView.SettingsTabName = sTabName;
-	this.tabs.push({
-		view: oView,
-		name: sTabName,
-		title: sTabTitle
-	});
+	if (oTab)
+	{
+		if (!_.isEmpty(oView))
+		{
+			oView.SettingsTabName = sTabName;
+			oTab.view = oView;
+			oTab.title = sTabTitle;
+		}
+	}
+	else
+	{
+		oView.SettingsTabName = sTabName;
+		this.tabs.push({
+			view: oView,
+			name: sTabName,
+			title: sTabTitle,
+			sections: []
+		});
+	}
 	
 	this.tabs(_.sortBy(this.tabs(), function (oTab) {
 		var iIndex = _.indexOf(Settings.TabsOrder, oTab.name);
 		return iIndex !== -1 ? iIndex : iLastIndex;
 	}));
+};
+
+CSettingsView.prototype.registerTabSection = function (fGetSectionView, sTabName) {
+	var
+		oTab = _.findWhere(this.tabs(), {'name': sTabName}),
+		oSection = fGetSectionView()
+	;
+
+	if (!oTab)
+	{
+		this.registerTab(function () { return {}; }, sTabName, '');
+		oTab = _.findWhere(this.tabs(), {'name': sTabName});
+	}
+	
+	if (oTab)
+	{
+		oTab.sections.push(oSection);
+	}
 };
 
 CSettingsView.prototype.onShow = function ()

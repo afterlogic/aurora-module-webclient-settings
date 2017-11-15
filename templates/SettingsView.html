@@ -25,6 +25,9 @@
 			<div class="panel_content" data-bind="with: currentTab">
 				<div data-bind="attr: {'class': 'middle_bar ' + name}">
 					<!-- ko template: {name: view.ViewTemplate, data: view} --><!-- /ko -->
+					<div data-bind="foreach: sections">
+						<!-- ko template: {name: $data.ViewTemplate} --><!-- /ko -->
+					</div>
 				</div>
 			</div>
 		</div>
