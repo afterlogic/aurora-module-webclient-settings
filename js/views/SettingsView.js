@@ -50,23 +50,28 @@ CSettingsView.prototype.registerTab = function (fGetTabView, sTabName, sTabTitle
 		oTab = _.findWhere(this.tabs(), {'name': sTabName})
 	;
 	
-	if (oTab)
-	{
-		if (!_.isEmpty(oView))
-		{
-			oView.SettingsTabName = sTabName;
-			oTab.view = oView;
-			oTab.title = sTabTitle;
-		}
-	}
-	else
+	if (!_.isEmpty(oView))
 	{
 		oView.SettingsTabName = sTabName;
+		oView.SettingsTabTitle = sTabTitle;
+		if (oTab)
+		{
+			if (_.isArray(oTab.sections))
+			{
+				_.each(oTab.sections, function (oSection) {
+					oView.addSettingsSection(oSection);
+				});
+				delete oTab.sections;
+			}
+			oTab.view = oView;
+		}
+	}
+	
+	if (!oTab)
+	{
 		this.tabs.push({
 			view: oView,
-			name: sTabName,
-			title: sTabTitle,
-			sections: []
+			name: sTabName
 		});
 	}
 	
@@ -82,16 +87,24 @@ CSettingsView.prototype.registerTabSection = function (fGetSectionView, sTabName
 		oSection = fGetSectionView()
 	;
 
-	if (!oTab)
+	if (oTab)
+	{
+		oTab.view.addSettingsSection(oSection);
+	}
+	else
 	{
 		this.registerTab(function () { return {}; }, sTabName, '');
 		oTab = _.findWhere(this.tabs(), {'name': sTabName});
+		if (oTab)
+		{
+			if (!_.isArray(oTab.sections))
+			{
+				oTab.sections = [];
+			}
+			oTab.sections.push(oSection);
+		}
 	}
 	
-	if (oTab)
-	{
-		oTab.sections.push(oSection);
-	}
 };
 
 CSettingsView.prototype.onShow = function ()
