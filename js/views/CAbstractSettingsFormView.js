@@ -2,7 +2,6 @@
 
 var
 	_ = require('underscore'),
-	$ = require('jquery'),
 	ko = require('knockout'),
 	
 	TextUtils = require('%PathToCoreWebclientModule%/js/utils/Text.js'),
@@ -43,23 +42,24 @@ CAbstractSettingsFormView.prototype.addSettingsSection = function (oSection)
 	this.aSettingsSections.push(oSection);
 };
 
-CAbstractSettingsFormView.prototype.onRoute = function ()
+/**
+ * @param {Object} oData
+ */
+CAbstractSettingsFormView.prototype.showTab = function (oData)
 {
 	this.bShown = true;
 	this.revert();
 	if (_.isFunction(this.onShow))
 	{
-		this.onShow();
+		this.onShow(oData);
 	}
 	_.each(this.aSettingsSections, function (oSection) {
 		if (_.isFunction(oSection.onShow))
 		{
-			oSection.onShow();
+			oSection.onShow(oData);
 		}
 	});
 };
-
-CAbstractSettingsFormView.prototype.show = CAbstractSettingsFormView.prototype.onRoute;
 
 /**
  * @param {Function} fAfterHideHandler
@@ -80,7 +80,7 @@ CAbstractSettingsFormView.prototype.hide = function (fAfterHideHandler, fRevertR
 				fAfterHideHandler();
 				this.revert();
 			}
-			else if ($.isFunction(fRevertRouting))
+			else if (_.isFunction(fRevertRouting))
 			{
 				fRevertRouting();
 			}

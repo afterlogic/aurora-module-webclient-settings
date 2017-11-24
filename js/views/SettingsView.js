@@ -131,9 +131,9 @@ CSettingsView.prototype.onRoute = function (aParams)
 		fShowNewTab = function () {
 			if (oNewTab)
 			{
-				if ($.isFunction(oNewTab.view.onRoute))
+				if (_.isFunction(oNewTab.view.showTab))
 				{
-					oNewTab.view.onRoute(aParams);
+					oNewTab.view.showTab(aParams);
 				}
 				this.currentTab(oNewTab);
 				if (oNewTab.name !== sNewTabName)
@@ -153,7 +153,10 @@ CSettingsView.prototype.onRoute = function (aParams)
 	
 	if (oCurrentTab && sNewTabName === oCurrentTab.name)
 	{
-		oCurrentTab.view.onRoute(aParams);
+		if (_.isFunction(oCurrentTab.view.showTab))
+		{
+			oCurrentTab.view.showTab(aParams);
+		}
 		return;
 	}
 	
@@ -166,7 +169,7 @@ CSettingsView.prototype.onRoute = function (aParams)
 	
 	if (oNewTab)
 	{
-		if (oCurrentTab && $.isFunction(oCurrentTab.view.hide))
+		if (oCurrentTab && _.isFunction(oCurrentTab.view.hide))
 		{
 			oCurrentTab.view.hide(fShowNewTab, fRevertRouting);
 			bShow = false;
