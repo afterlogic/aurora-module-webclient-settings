@@ -13,12 +13,8 @@ module.exports = function (oAppData) {
 	
 	if (bAdminUser || bNormalUser || bCustomerUser)
 	{
-		var
-			Settings = require('modules/%ModuleName%/js/Settings.js'),
-			oSettings = oAppData['%ModuleName%'] || {}
-		;
-
-		Settings.init(oSettings);
+		var Settings = require('modules/%ModuleName%/js/Settings.js');
+		Settings.init(oAppData);
 		
 		if (bAdminUser)
 		{
