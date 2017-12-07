@@ -69,7 +69,10 @@ CAbstractSettingsFormView.prototype.hide = function (fAfterHideHandler, fRevertR
 {
 	var bStateChanged = this.getCurrentState() !== this.sSavedState;
 	_.each(this.aSettingsSections, function (oSection) {
-		bStateChanged = bStateChanged || oSection.getCurrentState() !== oSection.sSavedState;
+		if (_.isFunction(oSection.getCurrentState))
+		{
+			bStateChanged = bStateChanged || oSection.getCurrentState() !== oSection.sSavedState;
+		}
 	});
 	if (bStateChanged) // if values have been changed
 	{
