@@ -2,5 +2,9 @@
     "Disabled": [
 		false,
 		"bool"
+	],
+    "TabsOrder": [
+		["common", "mail", "mail-accounts", "contacts", "calendar", "files", "mobilesync", "outlooksync", "helpdesk", "openpgp"],
+		"array"
 	]
 }
