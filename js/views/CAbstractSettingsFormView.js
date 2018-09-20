@@ -62,19 +62,33 @@ CAbstractSettingsFormView.prototype.showTab = function (oData)
 };
 
 /**
- * @param {Function} fAfterHideHandler
- * @param {Function} fRevertRouting
+ * Checks if there are changes in settings form.
+ * @returns {Boolean}
  */
-CAbstractSettingsFormView.prototype.hide = function (fAfterHideHandler, fRevertRouting)
+CAbstractSettingsFormView.prototype.hasUnsavedChanges = function ()
 {
+	// changes in form itself
 	var bStateChanged = this.getCurrentState() !== this.sSavedState;
+	
+	// changes in form sections from other modules
 	_.each(this.aSettingsSections, function (oSection) {
 		if (_.isFunction(oSection.getCurrentState))
 		{
 			bStateChanged = bStateChanged || oSection.getCurrentState() !== oSection.sSavedState;
 		}
 	});
-	if (bStateChanged) // if values have been changed
+	
+	return bStateChanged;
+};
+
+/**
+ * Hides settings form if there are no changes or user allows to discard them.
+ * @param {Function} fAfterHideHandler Handler should be executed to hide settings form.
+ * @param {Function} fRevertRouting Handler should be executed to revert routing if settings form can't be hidden.
+ */
+CAbstractSettingsFormView.prototype.hide = function (fAfterHideHandler, fRevertRouting)
+{
+	if (this.hasUnsavedChanges())
 	{
 		Popups.showPopup(ConfirmPopup, [TextUtils.i18n('COREWEBCLIENT/CONFIRM_DISCARD_CHANGES'), _.bind(function (bDiscard) {
 			if (bDiscard)

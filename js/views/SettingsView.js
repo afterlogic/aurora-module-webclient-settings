@@ -107,6 +107,28 @@ CSettingsView.prototype.registerTabSection = function (fGetSectionView, sTabName
 	
 };
 
+/**
+ * Checks if there are changes in Settings screen.
+ * @returns {Boolean}
+ */
+CSettingsView.prototype.hasUnsavedChanges = function ()
+{
+	var oCurrentTab = this.currentTab();
+	return oCurrentTab && oCurrentTab.view && _.isFunction(oCurrentTab.view.hasUnsavedChanges) && oCurrentTab.view.hasUnsavedChanges();
+};
+
+/**
+ * Discards changes in Settings screen.
+ */
+CSettingsView.prototype.discardChanges = function ()
+{
+	var oCurrentTab = this.currentTab();
+	if (oCurrentTab && oCurrentTab.view && _.isFunction(oCurrentTab.view.revert))
+	{
+		oCurrentTab.view.revert();
+	}
+};
+
 CSettingsView.prototype.onShow = function ()
 {
 	$html.addClass('non-adjustable');
