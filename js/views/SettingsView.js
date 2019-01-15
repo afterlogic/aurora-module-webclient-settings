@@ -136,6 +136,11 @@ CSettingsView.prototype.onShow = function ()
 
 CSettingsView.prototype.onHide = function ()
 {
+	var oCurrentTab = this.currentTab();
+	if (oCurrentTab && _.isFunction(oCurrentTab.view.hide))
+	{
+		oCurrentTab.view.hide(function () {}, function () {});
+	}
 	$html.removeClass('non-adjustable');
 };
 
