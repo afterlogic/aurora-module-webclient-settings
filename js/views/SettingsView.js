@@ -93,7 +93,7 @@ CSettingsView.prototype.registerTabSection = function (fGetSectionView, sTabName
 	}
 	else
 	{
-		this.registerTab(function () { return {}; }, sTabName, '');
+		this.registerTab(function () { return { visible: ko.observable(false) }; }, sTabName, '');
 		oTab = _.findWhere(this.tabs(), {'name': sTabName});
 		if (oTab)
 		{
