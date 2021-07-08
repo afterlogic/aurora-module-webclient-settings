@@ -263,9 +263,13 @@
 	.buttons {
 		margin: 0px 20px 15px;
 	}
-	
+
 	.fieldset .buttons {
 		margin: 0px 0px 15px 0px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 }
 
@@ -520,4 +524,56 @@ html.rtl .settings .signature .editor_row .editor {
 
 .settings .signature .editor_row .editor .html_editor {
 	.pass-events-through();
+}
+
+.panels.settings .ip-allow-list,
+.panels.settings .security,
+.panels.settings .two-factor-auth {
+	.folders .items_list .item {
+		&:last-child {
+			border-bottom: 1px solid #cccccc;
+		}
+		.title {
+			cursor: default;
+
+			.name {
+				line-height: 1.4;
+
+				.name_empty {
+					color: #c1bfbf;
+				}
+
+				.text_hint {
+					color: #929292;
+					font-size: smaller;
+				}
+			}
+		}
+	}
+
+	.folders.items_list .controls .button {
+		&.rename {
+			font-size: 26px;
+			margin-top: -2px;
+			margin-right: 6px;
+
+			&:before {
+				content: "\e62d";
+			}
+		}
+		&.delete {
+			vertical-align: top;
+		}
+	}
+
+	.device-active-icon {
+		.init-icon-font();
+
+		color: #96c671;
+		font-size: 10pt;
+
+		&:before {
+			content: "\e649";
+		}
+	}
 }
