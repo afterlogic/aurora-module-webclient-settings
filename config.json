@@ -1,10 +1,29 @@
 {
-    "Disabled": [
-		false,
-		"bool"
-	],
-    "TabsOrder": [
-		["common", "mail", "mail-accounts", "contacts", "calendar", "files", "mobilesync", "outlooksync", "helpdesk", "openpgp"],
-		"array"
-	]
+  "Disabled": [
+    false,
+    "bool"
+  ],
+  "Disabled_Description": [
+    "",
+    "string"
+  ],
+  "TabsOrder": [
+    [
+      "common",
+      "mail",
+      "mail-accounts",
+      "contacts",
+      "calendar",
+      "files",
+      "mobilesync",
+      "outlooksync",
+      "helpdesk",
+      "openpgp"
+    ],
+    "array"
+  ],
+  "TabsOrder_Description": [
+    "",
+    "string"
+  ]
 }
