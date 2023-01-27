@@ -9,7 +9,7 @@ namespace Aurora\Modules\SettingsWebclient;
 
 /**
  * This module displays the interface of user settings. The settings are provided by other modules.
- * 
+ *
  * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2023, Afterlogic Corp.
@@ -18,19 +18,19 @@ namespace Aurora\Modules\SettingsWebclient;
  */
 class Module extends \Aurora\System\Module\AbstractWebclientModule
 {
-	/***** public functions might be called with web API *****/
-	/**
-	 * Obtains list of module settings for authenticated user.
-	 * 
-	 * @return array
-	 */
-	public function GetSettings()
-	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
-		
-		return array(
-			'TabsOrder' => $this->getConfig('TabsOrder', ['common', 'mail', 'mail-accounts', 'contacts', 'calendar', 'files', 'mobilesync', 'outlooksync', 'helpdesk', 'openpgp']),
-		);
-	}
-	/***** public functions might be called with web API *****/
+    /***** public functions might be called with web API *****/
+    /**
+     * Obtains list of module settings for authenticated user.
+     *
+     * @return array
+     */
+    public function GetSettings()
+    {
+        \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
+
+        return array(
+            'TabsOrder' => $this->getConfig('TabsOrder', ['common', 'mail', 'mail-accounts', 'contacts', 'calendar', 'files', 'mobilesync', 'outlooksync', 'helpdesk', 'openpgp']),
+        );
+    }
+    /***** public functions might be called with web API *****/
 }
