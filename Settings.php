@@ -31,6 +31,7 @@ class Settings extends \Aurora\System\Module\Settings
                     "mail",
                     "mail-accounts",
                     "contacts",
+                    "manage-addressbooks",
                     "calendar",
                     "files",
                     "mobilesync",
