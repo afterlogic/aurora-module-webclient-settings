@@ -1,4 +1,4 @@
-<div class="screen SettingsLayout" style="display: none;">
+<div class="screen SettingsLayout" style="display: none;" data-test-id="settings">
 	<div class="panels settings">
 		<div class="panel left_panel navigation_panel" data-bind="adjustHeightToContent: {}">
 			<div class="panel_content">
@@ -6,7 +6,7 @@
 					<div class="panel_center">
 						<div class="items_list" data-bind="foreach: tabs">
 							<div class="item canSelect" data-bind="visible: typeof(view.visible) !== 'undefined' ? view.visible() : true, 
-									attr: {'class': 'item canSelect ' + name, 'id': 'selenium_settings_' + name}, 
+									attr: {'class': 'item canSelect ' + name, 'id': 'selenium_settings_' + name, 'data-test-id': 'settings-tab', 'data-settings-name': name}, 
 									css: {'selected': $parent.currentTab() && $parent.currentTab().name === name}, 
 									click: function () { $parent.changeTab(name); }">
 								<span class="title">
