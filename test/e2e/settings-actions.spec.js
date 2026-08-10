@@ -5,7 +5,7 @@ const { sharedHelper, moduleHelper, fixturePath } = require(path.join(
 ))
 const { test, expect } = require('@playwright/test')
 const { T } = sharedHelper('timeouts')
-const { loginAsTestUser, step, attachScreenshot, hasCredentials } = sharedHelper('login')
+const { gotoLoggedIn, step, attachScreenshot, hasCredentials } = sharedHelper('login')
 const { clickReady } = sharedHelper('ready')
 const { openSettings, goBackToSettingsMenu } = require('./helpers/settings')
 
@@ -15,7 +15,7 @@ test.describe('Desktop settings actions', () => {
 
   test('opens every settings tab', async ({ page }) => {
     test.setTimeout(T(180000))
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
     await openSettings(page)
 
     const tabs = page.getByTestId('settings-tab')
@@ -44,7 +44,7 @@ test.describe('Desktop settings actions', () => {
 
   test('opens OpenPGP settings when available', async ({ page }) => {
     test.setTimeout(T(180000))
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
     await openSettings(page)
 
     const openPgpTab = page.locator(
@@ -83,7 +83,7 @@ test.describe('Desktop settings actions', () => {
 
   test('opens Paranoid Encryption settings', async ({ page }) => {
     test.setTimeout(T(120000))
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
     await openSettings(page)
 
     const paranoidTab = page
@@ -110,7 +110,7 @@ test.describe('Desktop settings actions', () => {
 
   test('opens Add account control when available', async ({ page }) => {
     test.setTimeout(T(120000))
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
     await openSettings(page)
 
     await step('Open mail/accounts tab if needed', async () => {

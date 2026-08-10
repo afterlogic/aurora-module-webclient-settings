@@ -5,7 +5,7 @@ const { sharedHelper, moduleHelper, fixturePath } = require(path.join(
 ))
 const { test, expect } = require('@playwright/test')
 const { T } = sharedHelper('timeouts')
-const { loginAsTestUser, step, attachScreenshot, hasCredentials } = sharedHelper('login')
+const { gotoLoggedIn, step, attachScreenshot, hasCredentials } = sharedHelper('login')
 const { clickReady } = sharedHelper('ready')
 const { openSettings, logoutToLoginForm } = require('./helpers/settings')
 
@@ -16,7 +16,7 @@ test.describe('Desktop settings', () => {
   test('opens settings then logs out', async ({ page }) => {
     test.setTimeout(T(120000))
 
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
 
     await openSettings(page)
     await attachScreenshot(page, 'settings-01-open')

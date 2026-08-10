@@ -5,7 +5,7 @@ const { sharedHelper, moduleHelper, fixturePath } = require(path.join(
 ))
 const { test, expect } = require('@playwright/test')
 const { T } = sharedHelper('timeouts')
-const { loginAsTestUser, step, attachScreenshot, hasCredentials } = sharedHelper('login')
+const { gotoLoggedIn, step, attachScreenshot, hasCredentials } = sharedHelper('login')
 const { clickReady } = sharedHelper('ready')
 const {
   openSettings,
@@ -35,7 +35,7 @@ test.describe('Desktop settings auth surfaces', () => {
 
   test('OpenPGP: generate control visible (no create)', async ({ page }) => {
     test.setTimeout(T(180000))
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
     await openSettings(page)
 
     const opened = await openOpenPgpTab(page)
@@ -62,7 +62,7 @@ test.describe('Desktop settings auth surfaces', () => {
 
   test('OpenPGP: toggle mail option', async ({ page }) => {
     test.setTimeout(T(180000))
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
     await openSettings(page)
 
     const opened = await openOpenPgpTab(page)
@@ -99,7 +99,7 @@ test.describe('Desktop settings auth surfaces', () => {
 
   test('Paranoid Encryption shows enable controls', async ({ page }) => {
     test.setTimeout(T(120000))
-    await loginAsTestUser(page)
+    await gotoLoggedIn(page)
     await openSettings(page)
 
     const paranoidTab = page
