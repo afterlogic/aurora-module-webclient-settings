@@ -4,6 +4,7 @@ const { sharedHelper, moduleHelper, fixturePath } = require(path.join(
   'helpers/paths'
 ))
 const { test, expect } = require('@playwright/test')
+const { T } = sharedHelper('timeouts')
 const { loginAsTestUser, step, attachScreenshot, hasCredentials } = sharedHelper('login')
 const { clickReady } = sharedHelper('ready')
 const {
@@ -33,7 +34,7 @@ test.describe('Desktop settings auth surfaces', () => {
   test.skip(!hasCredentials(), 'Set E2E_LOGIN_0/E2E_PASSWORD_0 (or E2E_LOGIN/E2E_PASSWORD) in .env.e2e')
 
   test('OpenPGP: generate control visible (no create)', async ({ page }) => {
-    test.setTimeout(180000)
+    test.setTimeout(T(180000))
     await loginAsTestUser(page)
     await openSettings(page)
 
@@ -42,7 +43,7 @@ test.describe('Desktop settings auth surfaces', () => {
 
     await step('Expect OpenPGP panel and generate control', async () => {
       await expect(page.getByTestId('settings-openpgp')).toBeVisible({
-        timeout: 30000,
+        timeout: T(30000),
       })
       const generate = page.getByTestId('settings-openpgp-generate')
       test.skip(
@@ -60,7 +61,7 @@ test.describe('Desktop settings auth surfaces', () => {
   })
 
   test('OpenPGP: toggle mail option', async ({ page }) => {
-    test.setTimeout(180000)
+    test.setTimeout(T(180000))
     await loginAsTestUser(page)
     await openSettings(page)
 
@@ -69,7 +70,7 @@ test.describe('Desktop settings auth surfaces', () => {
 
     await step('Toggle Enable in mail', async () => {
       await expect(page.getByTestId('settings-openpgp')).toBeVisible({
-        timeout: 30000,
+        timeout: T(30000),
       })
       const enable = page.getByTestId('settings-openpgp-enable-mail')
       test.skip(
@@ -97,7 +98,7 @@ test.describe('Desktop settings auth surfaces', () => {
   })
 
   test('Paranoid Encryption shows enable controls', async ({ page }) => {
-    test.setTimeout(120000)
+    test.setTimeout(T(120000))
     await loginAsTestUser(page)
     await openSettings(page)
 
@@ -111,8 +112,8 @@ test.describe('Desktop settings auth surfaces', () => {
 
     await step('Open tab and expect toggles', async () => {
       await clickReady(paranoidTab.first())
-      await expect(page.getByTestId('settings-paranoid')).toBeVisible({
-        timeout: 30000,
+      await expect(page.getByTestId('settings-paranoid-encryption')).toBeVisible({
+        timeout: T(30000),
       })
       await expect(page.getByTestId('settings-paranoid-enable')).toBeVisible()
       console.log('  → Paranoid controls visible (no mutation)')

@@ -4,6 +4,7 @@ const { sharedHelper, moduleHelper, fixturePath } = require(path.join(
   'helpers/paths'
 ))
 const { test, expect } = require('@playwright/test')
+const { T } = sharedHelper('timeouts')
 const { loginAsTestUser, step, attachScreenshot, hasCredentials } = sharedHelper('login')
 const { clickReady } = sharedHelper('ready')
 const { openSettings, goBackToSettingsMenu } = require('./helpers/settings')
@@ -13,7 +14,7 @@ test.describe('Desktop settings actions', () => {
   test.skip(!hasCredentials(), 'Set E2E_LOGIN_0/E2E_PASSWORD_0 (or E2E_LOGIN/E2E_PASSWORD) in .env.e2e')
 
   test('opens every settings tab', async ({ page }) => {
-    test.setTimeout(180000)
+    test.setTimeout(T(180000))
     await loginAsTestUser(page)
     await openSettings(page)
 
@@ -32,7 +33,7 @@ test.describe('Desktop settings actions', () => {
         ).trim()
         await clickReady(tab)
         await expect(page.getByTestId('settings')).toBeVisible({
-          timeout: 15000,
+          timeout: T(15000),
         })
         console.log(`  → Opened tab: ${label || name || i}`)
         await attachScreenshot(page, `settings-tab-${i + 1}`)
@@ -42,7 +43,7 @@ test.describe('Desktop settings actions', () => {
   })
 
   test('opens OpenPGP settings when available', async ({ page }) => {
-    test.setTimeout(180000)
+    test.setTimeout(T(180000))
     await loginAsTestUser(page)
     await openSettings(page)
 
@@ -64,7 +65,7 @@ test.describe('Desktop settings actions', () => {
         await clickReady(byText.first())
       }
       await expect(page.getByTestId('settings-openpgp')).toBeVisible({
-        timeout: 30000,
+        timeout: T(30000),
       })
       await attachScreenshot(page, 'settings-openpgp-01')
     })
@@ -81,7 +82,7 @@ test.describe('Desktop settings actions', () => {
   })
 
   test('opens Paranoid Encryption settings', async ({ page }) => {
-    test.setTimeout(120000)
+    test.setTimeout(T(120000))
     await loginAsTestUser(page)
     await openSettings(page)
 
@@ -95,8 +96,8 @@ test.describe('Desktop settings actions', () => {
 
     await step('Open Paranoid Encryption tab', async () => {
       await clickReady(paranoidTab.first())
-      await expect(page.getByTestId('settings-paranoid')).toBeVisible({
-        timeout: 30000,
+      await expect(page.getByTestId('settings-paranoid-encryption')).toBeVisible({
+        timeout: T(30000),
       })
       await expect(page.getByTestId('settings-paranoid-enable')).toBeVisible()
       await attachScreenshot(page, 'settings-paranoid-01')
@@ -108,7 +109,7 @@ test.describe('Desktop settings actions', () => {
   })
 
   test('opens Add account control when available', async ({ page }) => {
-    test.setTimeout(120000)
+    test.setTimeout(T(120000))
     await loginAsTestUser(page)
     await openSettings(page)
 
@@ -130,7 +131,7 @@ test.describe('Desktop settings actions', () => {
     )
 
     await step('Expect Add account button', async () => {
-      await expect(addAccount).toBeVisible({ timeout: 15000 })
+      await expect(addAccount).toBeVisible({ timeout: T(15000) })
       await attachScreenshot(page, 'settings-add-account-01')
     })
   })

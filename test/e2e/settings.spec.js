@@ -4,6 +4,7 @@ const { sharedHelper, moduleHelper, fixturePath } = require(path.join(
   'helpers/paths'
 ))
 const { test, expect } = require('@playwright/test')
+const { T } = sharedHelper('timeouts')
 const { loginAsTestUser, step, attachScreenshot, hasCredentials } = sharedHelper('login')
 const { clickReady } = sharedHelper('ready')
 const { openSettings, logoutToLoginForm } = require('./helpers/settings')
@@ -13,7 +14,7 @@ test.describe('Desktop settings', () => {
   test.skip(!hasCredentials(), 'Set E2E_LOGIN_0/E2E_PASSWORD_0 (or E2E_LOGIN/E2E_PASSWORD) in .env.e2e')
 
   test('opens settings then logs out', async ({ page }) => {
-    test.setTimeout(120000)
+    test.setTimeout(T(120000))
 
     await loginAsTestUser(page)
 
@@ -40,7 +41,7 @@ test.describe('Desktop settings', () => {
         await clickReady(firstTab)
         console.log(`  → Opened settings tab: ${label || '(unknown)'}`)
         await expect(page.getByTestId('settings')).toBeVisible({
-          timeout: 15000,
+          timeout: T(15000),
         })
         await attachScreenshot(page, 'settings-03-tab')
       })

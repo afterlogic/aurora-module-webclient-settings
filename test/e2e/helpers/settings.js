@@ -6,12 +6,13 @@ const { sharedHelper, fixturePath } = require(path.join(
 const { expect } = require('@playwright/test')
 const { step } = sharedHelper('login')
 const { clickReady, clickNav } = sharedHelper('ready')
+const { T } = sharedHelper('timeouts')
 
 async function openSettings(page) {
   await step('Open Settings', async () => {
     await clickNav(page, 'nav-settings')
     await expect(page.getByTestId('settings')).toBeVisible({
-      timeout: 30000,
+      timeout: T(30000),
     })
   })
 }
@@ -25,7 +26,7 @@ async function openSettingsTab(page, pathOrName) {
     `[data-test-id="settings-tab"][data-settings-path="${pathOrName}"]`
   )
   if ((await byPath.count()) > 0) {
-    await expect(byPath.first()).toBeVisible({ timeout: 15000 })
+    await expect(byPath.first()).toBeVisible({ timeout: T(15000) })
     await clickReady(byPath.first())
     return
   }
@@ -40,7 +41,7 @@ async function openSettingsTab(page, pathOrName) {
     `[data-test-id="settings-tab"][data-settings-name="${name}"], [data-test-id="settings-tab"][data-settings-name="${pathOrName}"]`
   )
   if ((await byName.count()) > 0) {
-    await expect(byName.first()).toBeVisible({ timeout: 15000 })
+    await expect(byName.first()).toBeVisible({ timeout: T(15000) })
     await clickReady(byName.first())
     return
   }
@@ -50,7 +51,7 @@ async function openSettingsTab(page, pathOrName) {
     .getByTestId('settings-tab')
     .filter({ hasText: new RegExp(name || pathOrName, 'i') })
     .first()
-  await expect(byText).toBeVisible({ timeout: 15000 })
+  await expect(byText).toBeVisible({ timeout: T(15000) })
   await clickReady(byText)
 }
 
@@ -68,7 +69,7 @@ async function logoutToLoginForm(page) {
   await step('Logout to login form', async () => {
     await clickReady(page.getByTestId('settings-logout'))
     await expect(page.getByTestId('login-email')).toBeVisible({
-      timeout: 30000,
+      timeout: T(30000),
     })
   })
 }
