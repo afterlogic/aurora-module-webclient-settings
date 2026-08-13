@@ -4,7 +4,7 @@ const { sharedHelper, fixturePath } = require(path.join(
   'helpers/paths'
 ))
 const { expect } = require('@playwright/test')
-const { step } = sharedHelper('login')
+const { step, logoutToLoginForm } = sharedHelper('login')
 const { clickReady, clickNav } = sharedHelper('ready')
 const { T } = sharedHelper('timeouts')
 
@@ -65,19 +65,42 @@ async function goBackToSettingsMenu(page) {
   await openSettings(page)
 }
 
-async function logoutToLoginForm(page) {
-  await step('Logout to login form', async () => {
-    await clickReady(page.getByTestId('settings-logout'))
-    await expect(page.getByTestId('login-email')).toBeVisible({
-      timeout: T(30000),
-    })
-  })
+/** OpenPGP settings panel — staging may omit data-test-id. Heading lives in panel_top, not inside the panel_center test-id. */
+function openPgpPanel(page) {
+  return page
+    .locator(
+      [
+        '[data-test-id="settings-openpgp"]',
+        'h2.settings_heading:has-text("OpenPGP")',
+        '.settings_heading:has-text("OpenPGP")',
+      ].join(', ')
+    )
+    .first()
+}
+
+function openPgpGenerateButton(page) {
+  return page
+    .locator(
+      '[data-test-id="settings-openpgp-generate"], .buttons .button:has-text("Generate new key")'
+    )
+    .first()
+}
+
+function openPgpEnableMailControl(page) {
+  return page
+    .locator(
+      '[data-test-id="settings-openpgp-enable-mail"], label.custom_checkbox:has(#enableOpenPgpInMail)'
+    )
+    .first()
 }
 
 module.exports = {
   openSettings,
   openSettingsTab,
   goBackToSettingsMenu,
+  openPgpPanel,
+  openPgpGenerateButton,
+  openPgpEnableMailControl,
   logoutToLoginForm,
   clickReady,
 }

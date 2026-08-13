@@ -10,6 +10,9 @@ const { clickReady } = sharedHelper('ready')
 const {
   openSettings,
   goBackToSettingsMenu,
+  openPgpPanel,
+  openPgpGenerateButton,
+  openPgpEnableMailControl,
 } = require('./helpers/settings')
 
 
@@ -42,15 +45,11 @@ test.describe('Desktop settings auth surfaces', () => {
     test.skip(!opened, 'OpenPGP settings tab is not available on this stand')
 
     await step('Expect OpenPGP panel and generate control', async () => {
-      await expect(page.getByTestId('settings-openpgp')).toBeVisible({
+      await expect(openPgpPanel(page)).toBeVisible({
         timeout: T(30000),
       })
-      const generate = page.getByTestId('settings-openpgp-generate')
-      test.skip(
-        (await generate.count()) === 0,
-        'settings-openpgp-generate not present on desktop form'
-      )
-      await expect(generate).toBeVisible()
+      const generate = openPgpGenerateButton(page)
+      await expect(generate).toBeVisible({ timeout: T(15000) })
       console.log('  → Generate control visible (not submitting)')
       await attachScreenshot(page, 'settings-auth-pgp-generate')
     })
@@ -69,21 +68,23 @@ test.describe('Desktop settings auth surfaces', () => {
     test.skip(!opened, 'OpenPGP settings tab is not available on this stand')
 
     await step('Toggle Enable in mail', async () => {
-      await expect(page.getByTestId('settings-openpgp')).toBeVisible({
+      await expect(openPgpPanel(page)).toBeVisible({
         timeout: T(30000),
       })
-      const enable = page.getByTestId('settings-openpgp-enable-mail')
-      test.skip(
-        (await enable.count()) === 0,
-        'Enable OpenPGP in mail control not shown (Mail unavailable)'
-      )
+      const enable = openPgpEnableMailControl(page)
+      await expect(enable).toBeVisible({ timeout: T(15000) })
       const before = await enable.evaluate((el) =>
-        el.classList.contains('checked')
+        el.classList.contains('checked') ||
+        (el.matches && el.matches('input') && el.checked)
       )
       await clickReady(enable)
       await expect
         .poll(async () =>
-          enable.evaluate((el) => el.classList.contains('checked'))
+          enable.evaluate(
+            (el) =>
+              el.classList.contains('checked') ||
+              (el.matches && el.matches('input') && el.checked)
+          )
         )
         .not.toBe(before)
       console.log(`  → Enable OpenPGP in mail toggled from ${before}`)
@@ -91,7 +92,7 @@ test.describe('Desktop settings auth surfaces', () => {
     })
 
     await step('Restore previous toggle value', async () => {
-      const enable = page.getByTestId('settings-openpgp-enable-mail')
+      const enable = openPgpEnableMailControl(page)
       await clickReady(enable)
       await goBackToSettingsMenu(page)
     })

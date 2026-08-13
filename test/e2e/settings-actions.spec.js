@@ -7,7 +7,7 @@ const { test, expect } = require('@playwright/test')
 const { T } = sharedHelper('timeouts')
 const { gotoLoggedIn, step, attachScreenshot, hasCredentials } = sharedHelper('login')
 const { clickReady } = sharedHelper('ready')
-const { openSettings, goBackToSettingsMenu } = require('./helpers/settings')
+const { openSettings, goBackToSettingsMenu, openPgpPanel, openPgpGenerateButton } = require('./helpers/settings')
 
 
 test.describe('Desktop settings actions', () => {
@@ -64,19 +64,15 @@ test.describe('Desktop settings actions', () => {
       } else {
         await clickReady(byText.first())
       }
-      await expect(page.getByTestId('settings-openpgp')).toBeVisible({
+      await expect(openPgpPanel(page)).toBeVisible({
         timeout: T(30000),
       })
       await attachScreenshot(page, 'settings-openpgp-01')
     })
 
     await step('Expect generate control when present', async () => {
-      const generate = page.getByTestId('settings-openpgp-generate')
-      if ((await generate.count()) > 0) {
-        await expect(generate).toBeVisible()
-      } else {
-        console.log('  → settings-openpgp-generate not present')
-      }
+      const generate = openPgpGenerateButton(page)
+      await expect(generate).toBeVisible({ timeout: T(15000) })
       await goBackToSettingsMenu(page)
     })
   })
