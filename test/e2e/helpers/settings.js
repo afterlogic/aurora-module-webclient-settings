@@ -287,6 +287,35 @@ async function switchMailAccount(page, email) {
   await expectCurrentMailAccount(page, email)
 }
 
+/**
+ * Nested tab inside Email Accounts (folders / signature / filters / forward / autoresponder).
+ */
+async function openAccountTab(page, tabName) {
+  const tab = page.locator(
+    `[data-test-id="settings-account-tab"][data-tab-name="${tabName}"]`
+  )
+  const fallback = page.locator(`#selenium_settings_account_${tabName}_button`)
+  const tabVisible = await tab
+    .first()
+    .waitFor({ state: 'visible', timeout: T(8000) })
+    .then(() => true)
+    .catch(() => false)
+  if (tabVisible) {
+    await clickReady(tab.first())
+    return true
+  }
+  const fallbackVisible = await fallback
+    .first()
+    .waitFor({ state: 'visible', timeout: T(3000) })
+    .then(() => true)
+    .catch(() => false)
+  if (fallbackVisible) {
+    await clickReady(fallback.first())
+    return true
+  }
+  return false
+}
+
 module.exports = {
   openSettings,
   openSettingsTab,
@@ -305,6 +334,7 @@ module.exports = {
   mailAccountOption,
   expectCurrentMailAccount,
   switchMailAccount,
+  openAccountTab,
   logoutToLoginForm,
   clickReady,
   clickNav,
