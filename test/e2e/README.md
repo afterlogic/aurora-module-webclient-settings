@@ -14,12 +14,13 @@ npm run test:e2e-desktop -- --setup "SettingsWebclient Chrome"
 Shared helpers: `modules/CoreWebclient/test/e2e/helpers/` (`AURORA_E2E_ROOT`).
 Domain helpers: `./helpers/` in this folder.
 
-## P1 specs (`settings-p1.spec.js`)
+Filter Playwright UI / CLI by **file name** or nested `test.describe`.
 
-- change Mail layout → open Mail with matching `layout-*` class on `<html>`
-- edit identity display name → visible in compose From
-- open 2FA settings form (no enable on stand)
+| File | What it covers |
+|------|----------------|
+| `settings.spec.js` | Open settings, walk tabs, OpenPGP / Paranoid when present |
+| `settings-actions.spec.js` | Add second mailbox and switch (needs SECONDARY) |
+| `settings-auth.spec.js` | OpenPGP controls, Paranoid Encryption, 2FA form |
+| `settings-mail.spec.js` | Mail layout, identity display name in compose |
 
-Multi-account switch: `settings-actions.spec.js` (needs SECONDARY).
-
-Stand gates: layout hidden when `AllowChangeLayout` is false; 2FA tab missing on stand.
+Stand gates: layout hidden when `AllowChangeLayout` is false; 2FA tab missing when `TwoFactorAuth` is disabled. Local stand: `AllowChangeLayout` true, `TwoFactorAuth.Disabled` false.

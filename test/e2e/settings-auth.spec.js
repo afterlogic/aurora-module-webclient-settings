@@ -36,7 +36,8 @@ async function openOpenPgpTab(page) {
 test.describe('Desktop settings auth surfaces', () => {
   test.skip(!hasCredentials(), 'Set E2E_LOGIN_0/E2E_PASSWORD_0 (or E2E_LOGIN/E2E_PASSWORD) in .env.e2e')
 
-  test('OpenPGP: generate control visible (no create)', async ({ page }) => {
+  test.describe('OpenPGP', () => {
+    test('OpenPGP: generate control visible (no create)', async ({ page }) => {
     test.setTimeout(T(180000))
     await gotoLoggedIn(page)
     await openSettings(page)
@@ -57,9 +58,9 @@ test.describe('Desktop settings auth surfaces', () => {
     await step('Back to settings root', async () => {
       await goBackToSettingsMenu(page)
     })
-  })
+    })
 
-  test('OpenPGP: toggle mail option', async ({ page }) => {
+    test('OpenPGP: toggle mail option', async ({ page }) => {
     test.setTimeout(T(180000))
     await gotoLoggedIn(page)
     await openSettings(page)
@@ -96,9 +97,11 @@ test.describe('Desktop settings auth surfaces', () => {
       await clickReady(enable)
       await goBackToSettingsMenu(page)
     })
+    })
   })
 
-  test('Paranoid Encryption shows enable controls', async ({ page }) => {
+  test.describe('Paranoid Encryption', () => {
+    test('Paranoid Encryption shows enable controls', async ({ page }) => {
     test.setTimeout(T(120000))
     await gotoLoggedIn(page)
     await openSettings(page)
@@ -123,6 +126,39 @@ test.describe('Desktop settings auth surfaces', () => {
 
     await step('Back to settings root', async () => {
       await goBackToSettingsMenu(page)
+    })
+    })
+  })
+
+  test.describe('Two-factor authentication', () => {
+    test('opens the 2FA setup form', async ({ page }) => {
+      test.setTimeout(T(120000))
+      await gotoLoggedIn(page)
+      await openSettings(page)
+
+      const tab = page.locator(
+        '[data-test-id="settings-tab"][data-settings-name="two-factor-auth"]'
+      )
+      const byText = page
+        .getByTestId('settings-tab')
+        .filter({ hasText: /two.?factor|2fa|двухфактор/i })
+      test.skip(
+        (await tab.count()) === 0 && (await byText.count()) === 0,
+        '2FA settings tab is not available on this stand'
+      )
+
+      await step('Open 2FA tab', async () => {
+        if ((await tab.count()) > 0) {
+          await clickReady(tab.first())
+        } else {
+          await clickReady(byText.first())
+        }
+        await expect(page.getByTestId('settings-2fa')).toBeVisible({
+          timeout: T(20000),
+        })
+        console.log('  → 2FA form visible')
+        await attachScreenshot(page, 'settings-2fa-01')
+      })
     })
   })
 })

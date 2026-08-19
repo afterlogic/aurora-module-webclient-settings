@@ -140,6 +140,55 @@ function addAccountButton(page) {
     .first()
 }
 
+/** Add identity on an account row — staging may omit data-test-id. */
+function addIdentityLink(page) {
+  const byTestId = page.getByTestId('settings-add-identity')
+  const byStructure = page
+    .locator(
+      [
+        '[data-test-id="settings-account-item"] .link.fetcher',
+        '.middle_bar.mail-accounts .item.account .link.fetcher',
+      ].join(', ')
+    )
+    .filter({ hasText: /add identity|добавить профиль/i })
+  return byTestId.or(byStructure).first()
+}
+
+function createIdentityDialog(page) {
+  return page
+    .locator(
+      [
+        '[data-test-id="settings-create-identity-dialog"]:visible',
+        '.popup.add_account:visible',
+      ].join(', ')
+    )
+    .filter({
+      has: page.locator(
+        '[data-test-id="settings-identity-name"], input[data-test-id="settings-identity-name"]'
+      ),
+    })
+    .first()
+}
+
+function identityListItem(page, text) {
+  const byTestId = page.getByTestId('settings-identity-item')
+  const byStructure = page.locator('.middle_bar.mail-accounts .item.fetcher')
+  const base = byTestId.or(byStructure)
+  return text ? base.filter({ hasText: text }).first() : base.first()
+}
+
+function removeIdentityLink(page) {
+  return page
+    .locator(
+      [
+        '[data-test-id="settings-remove-identity"]',
+        '.row.remove_account .link',
+      ].join(', ')
+    )
+    .filter({ hasText: /remove identity|удалить профиль/i })
+    .first()
+}
+
 function accountLocalPart(email) {
   return String(email).split('@')[0]
 }
@@ -326,6 +375,10 @@ module.exports = {
   mailAccountsTab,
   mailAccountsPane,
   addAccountButton,
+  addIdentityLink,
+  createIdentityDialog,
+  identityListItem,
+  removeIdentityLink,
   accountListItem,
   addAccountDialog,
   openMailAccountsSettings,
