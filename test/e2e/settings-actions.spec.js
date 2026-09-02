@@ -115,10 +115,11 @@ test.describe('Desktop settings actions', () => {
 
     await step('Open Paranoid Encryption tab', async () => {
       await clickReady(paranoidTab.first())
-      await expect(page.getByTestId('settings-paranoid-encryption')).toBeVisible({
-        timeout: T(30000),
-      })
-      await expect(page.getByTestId('settings-paranoid-enable')).toBeVisible()
+      const panel = page.getByTestId('settings-paranoid')
+      await expect(panel).toBeVisible({ timeout: T(30000) })
+      await expect(
+        panel.getByRole('checkbox', { name: /enable paranoid encryption/i })
+      ).toBeVisible()
       await attachScreenshot(page, 'settings-paranoid-01')
     })
 

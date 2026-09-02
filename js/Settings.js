@@ -9,7 +9,7 @@ var
 module.exports = {
 	HashModuleName: 'settings',
 	
-	TabsOrder: ['common', 'mail', 'mail-accounts', 'contacts', 'calendar', 'files', 'mobilesync', 'outlooksync', 'helpdesk', 'openpgp'],
+	TabsOrder: ['common', 'mail', 'mail-accounts', 'contacts', 'calendar', 'files', 'mobilesync', 'outlooksync', 'helpdesk', 'openpgp', 'paranoid-encryption'],
 	
 	/**
 	 * Initializes settings from AppData object sections.

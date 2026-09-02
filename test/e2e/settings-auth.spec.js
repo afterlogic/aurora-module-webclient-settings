@@ -116,10 +116,11 @@ test.describe('Desktop settings auth surfaces', () => {
 
     await step('Open tab and expect toggles', async () => {
       await clickReady(paranoidTab.first())
-      await expect(page.getByTestId('settings-paranoid-encryption')).toBeVisible({
-        timeout: T(30000),
-      })
-      await expect(page.getByTestId('settings-paranoid-enable')).toBeVisible()
+      const panel = page.getByTestId('settings-paranoid')
+      await expect(panel).toBeVisible({ timeout: T(30000) })
+      await expect(
+        panel.getByRole('checkbox', { name: /enable paranoid encryption/i })
+      ).toBeVisible()
       console.log('  → Paranoid controls visible (no mutation)')
       await attachScreenshot(page, 'settings-auth-paranoid')
     })
