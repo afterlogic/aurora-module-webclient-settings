@@ -65,12 +65,12 @@ async function goBackToSettingsMenu(page) {
   await openSettings(page)
 }
 
-/** OpenPGP settings panel — staging may omit data-test-id. Heading lives in panel_top, not inside the panel_center test-id. */
+/** OpenPGP settings panel (not the settings-tab middle_bar wrapper — same test-id). */
 function openPgpPanel(page) {
   return page
     .locator(
       [
-        '[data-test-id="settings-openpgp"]',
+        '.panel_center[data-test-id="settings-openpgp"]',
         'h2.settings_heading:has-text("OpenPGP")',
         '.settings_heading:has-text("OpenPGP")',
       ].join(', ')
